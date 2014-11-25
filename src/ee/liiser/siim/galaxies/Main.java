@@ -20,7 +20,7 @@ public class Main {
 	static float[] starDistances = new float[] { 2, 3, 4, 5, 6 };
 	static int[] starCounts = new int[] { 12, 18, 24, 30, 36 };
 
-	private static final Method method = Method.BASIC_VERLET;
+	private static final Method method = Method.VELOCITY_VERLET;
 
 	public static void main(String[] args) {
 
@@ -28,7 +28,7 @@ public class Main {
 
 		Core core = factory.makeCore(new Vector3f());
 		Core core2 = factory.makeCore(new Vector3f(0, 10, -30));
-//		((VelocityCore) core2).setVelocity(new Vector3f(0, 0, 0.3f));
+		((VelocityCore) core2).setVelocity(new Vector3f(0, 0, 0.3f));
 		cores = new Core[] { core, core2 };
 
 		int totalCount = 0;
@@ -50,7 +50,7 @@ public class Main {
 
 		new WorkerThread(cores, stars, method).start();
 		GraphicsThread g = new GraphicsThread(points);
-//		g.lookAt(cores[1], new Vector3f(30, 0, 0), new Vector3d(0,0,1));
+		g.lookAt(cores[1], new Vector3f(30, 0, 0), new Vector3d(0,0,1));
 		g.start();
 	}
 
