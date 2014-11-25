@@ -1,6 +1,5 @@
 package ee.liiser.siim.galaxies;
 
-import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 import ee.liiser.siim.galaxies.calculations.Calculator.Method;
@@ -17,8 +16,10 @@ public class Main {
 	static Star[] stars;
 	static Core[] cores;
 
-	static float[] starDistances = new float[] { 2, 3, 4, 5, 6 };
-	static int[] starCounts = new int[] { 12, 18, 24, 30, 36 };
+	/**
+	 * Number of stars per core (galaxy)
+	 */
+	static int starcount = 500;
 
 	private static final Method method = Method.VELOCITY_VERLET;
 
@@ -26,21 +27,17 @@ public class Main {
 
 		ObjectFactory factory = new ObjectFactory(method);
 
-		Core core = factory.makeCore(new Vector3f());
+		Core core1 = factory.makeCore(new Vector3f());
 		Core core2 = factory.makeCore(new Vector3f(0, 10, -30));
 		((VelocityCore) core2).setVelocity(new Vector3f(0, 0, 0.3f));
-		cores = new Core[] { core, core2 };
+		cores = new Core[] { core1, core2};
 
-		int totalCount = 0;
-		for (int i : starCounts)
-			totalCount += i;
-		stars = new Star[totalCount * cores.length];
+		stars = new Star[starcount * cores.length];
 		int index = 0;
-		for (int i = 0; i < starDistances.length; i++) {
-			for (int j = 0; j < starCounts[i]; j++) {
-				for (Core c : cores) {
-					stars[index++] = factory.makeStar(c, starDistances[i]);
-				}
+		for (Core core : cores) {
+			for (int i = 0; i < starcount; i++) {
+				stars[index++] = factory.makeStar(core,
+						(float) distanceWithDistribution(), new Vector3f(1,1,1));
 			}
 		}
 
@@ -50,8 +47,18 @@ public class Main {
 
 		new WorkerThread(cores, stars, method).start();
 		GraphicsThread g = new GraphicsThread(points);
-		g.lookAt(cores[1], new Vector3f(30, 0, 0), new Vector3d(0,0,1));
 		g.start();
+	}
+
+	/**
+	 * Generates random numbers according to a x*exp(-x) distribution with an error of order O(r^6)
+	 * 
+	 * @return Random numbers according to a x*exp(-x) distribution
+	 */
+	public static double distanceWithDistribution() {
+		double r = Math.random();
+		return r - r * r + Math.pow(r, 3) * 3 / 2 - Math.pow(r, 4) * 8 / 3
+				+ Math.pow(r, 5) * 125 / 24;
 	}
 
 }

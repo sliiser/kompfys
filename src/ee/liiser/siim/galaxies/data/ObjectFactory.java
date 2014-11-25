@@ -37,4 +37,15 @@ public class ObjectFactory {
 			return null;
 		}
 	}
+	
+	public Star makeStar(Core core, float distance, Vector3f normal) {
+		switch (method) {
+		case BASIC_VERLET:
+			return new BasicStar((BasicCore) core, distance, normal);
+		case VELOCITY_VERLET:
+			return new VelocityStar((VelocityCore) core, distance, normal);
+		default:
+			return null;
+		}
+	}
 }

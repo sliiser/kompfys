@@ -18,8 +18,10 @@ public class BasicStar extends BasicObject implements Star {
 	}
 
 	public BasicStar(BasicCore core, float distance) {
-		this(distance, 0, 0, distance, (float) (Calculator.dt / Math
-				.sqrt(distance)), 0);
+		this(core, distance, Math.random()*2*Math.PI);
+	}
+	public BasicStar(BasicCore core, float distance, Vector3f normal) {
+		this(core, distance, Math.random()*2*Math.PI, normal);
 	}
 
 	public BasicStar(BasicCore core, float distance, double angle) {
@@ -28,11 +30,15 @@ public class BasicStar extends BasicObject implements Star {
 		this.position = new Vector3f(x,y,0);
 		this.position.add(core.getPosition());
 		
-		this.oldPosition = core.getOldPosition();
-		this.oldPosition.add(new Vector3f(x,y,0));
+		this.oldPosition = new Vector3f(x,y,0);
+		this.oldPosition.add(core.getOldPosition());
 		Vector3f velocity = new Vector3f(y,-x,0);
-		velocity.scale((float) (1 / (distance * Math.sqrt(distance))));
+		velocity.scale((float) (Calculator.dt/(Math.sqrt(distance)*distance)));
 		this.oldPosition.sub(velocity);
+	}
+
+	public BasicStar(BasicCore core, float distance, double d, Vector3f normal) {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

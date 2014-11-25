@@ -14,7 +14,7 @@ public class BasicCore extends BasicObject implements Core{
 	}
 
 	public BasicCore(Vector3f position) {
-		this(position, position);
+		this(position, (Vector3f) position.clone());
 	}
 
 	public BasicCore(Vector3f position, Vector3f oldPosition) {

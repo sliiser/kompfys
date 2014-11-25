@@ -10,10 +10,9 @@ public class GraphicsThread extends Thread {
 
 	private Drawable[] points;
 
+	//What and how to look at variables
 	private Drawable target;
-
 	private Vector3f eye;
-
 	private Vector3d up;
 
 	public GraphicsThread(Drawable[] points) {

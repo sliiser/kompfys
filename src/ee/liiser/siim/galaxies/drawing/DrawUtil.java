@@ -1,13 +1,16 @@
 package ee.liiser.siim.galaxies.drawing;
 
+import java.awt.Dimension;
 import java.util.HashMap;
 
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
-import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.Canvas3D;
 import javax.media.j3d.PointLight;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Point3f;
@@ -36,7 +39,18 @@ public class DrawUtil {
 	}
 
 	public static void draw(Drawable[] points) {
-		universe = new SimpleUniverse();
+		initWindow();
+		
+		BranchGroup group = addPoints(points);
+
+		lookAt(new Point3d(0, 0, 20), new Point3d(0, 0, 0), new Vector3d(0, 1,
+				0));
+
+		// add the group of objects to the Universe
+		universe.addBranchGraph(group);
+	}
+
+	private static BranchGroup addPoints(Drawable[] points) {
 		BranchGroup group = new BranchGroup();
 
 		for (Drawable point : points) {
@@ -64,21 +78,29 @@ public class DrawUtil {
 
 			group.addChild(tg);
 		}
+		return group;
+	}
 
-		Color3f light1Color = new Color3f(1, 1, 1);
-		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0, 0.0, 0.0),
-				100.0);
-		Vector3f light1Direction = new Vector3f(4.0f, -7.0f, -12.0f);
-		DirectionalLight light1 = new DirectionalLight(light1Color,
-				light1Direction);
-		light1.setInfluencingBounds(bounds);
-		// group.addChild(light1);
-
-		lookAt(new Point3d(0, 0, 30), new Point3d(0, 0, 0), new Vector3d(0, 1,
-				0));
-
-		// add the group of objects to the Universe
-		universe.addBranchGraph(group);
+	private static void initWindow() {
+		JFrame frame = new JFrame("Kompfys: Galaktikad");
+		
+		Canvas3D canvas = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
+		
+		universe = new SimpleUniverse(canvas);
+		universe.getViewer().getView().setBackClipDistance(100);
+		
+		canvas.setSize(1000,1000);
+		ZoomListener listener = new ZoomListener(universe);
+		canvas.addMouseListener(listener);
+		canvas.addMouseWheelListener(listener);
+		canvas.addMouseMotionListener(listener);
+		frame.add(canvas);
+		frame.pack();
+		
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setPreferredSize(new Dimension(500,500));
+		frame.setVisible(true);
+		
 	}
 
 	public static void lookAt(Point3d eye, Point3d center, Vector3d up) {
