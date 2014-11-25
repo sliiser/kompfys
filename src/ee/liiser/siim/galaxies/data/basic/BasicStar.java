@@ -22,17 +22,17 @@ public class BasicStar extends BasicObject implements Star {
 				.sqrt(distance)), 0);
 	}
 
-	public BasicStar(BasicCore core, float distance, double d) {
-		float x = (float) (distance * Math.cos(d));
-		float y = (float) (distance * Math.sin(d));
-		double theta = Calculator.dt / (distance * Math.sqrt(distance));
-		this.position = new Vector3f(core.getPosition().x + x,
-				core.getPosition().y + y, 0);
-		this.oldPosition = new Vector3f(core.getOldPosition().x
-				- (float) (x * Math.cos(theta) + y * Math.sin(theta)),
-				core.getOldPosition().y
-						- (float) (y * Math.cos(theta) - x * Math.sin(theta)),
-				0);
+	public BasicStar(BasicCore core, float distance, double angle) {
+		float x = (float) (distance * Math.cos(angle));
+		float y = (float) (distance * Math.sin(angle));
+		this.position = new Vector3f(x,y,0);
+		this.position.add(core.getPosition());
+		
+		this.oldPosition = core.getOldPosition();
+		this.oldPosition.add(new Vector3f(x,y,0));
+		Vector3f velocity = new Vector3f(y,-x,0);
+		velocity.scale((float) (1 / (distance * Math.sqrt(distance))));
+		this.oldPosition.sub(velocity);
 	}
 
 	@Override

@@ -27,12 +27,12 @@ public class ObjectFactory {
 		}
 	}
 
-	public Star makeStar(Core core, float distance, double angle) {
+	public Star makeStar(Core core, float distance) {
 		switch (method) {
 		case BASIC_VERLET:
-			return new BasicStar((BasicCore) core, distance, angle);
+			return new BasicStar((BasicCore) core, distance);
 		case VELOCITY_VERLET:
-			return new VelocityStar((VelocityCore) core, distance, angle);
+			return new VelocityStar((VelocityCore) core, distance);
 		default:
 			return null;
 		}

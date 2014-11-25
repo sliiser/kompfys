@@ -17,7 +17,7 @@ public class Calculator {
 
 	private Core[] cores;
 	private Star[] stars;
-	public static float dt = 0.001f;
+	public static float dt = 0.0005f;
 
 	public enum Method {
 		BASIC_VERLET, VELOCITY_VERLET
