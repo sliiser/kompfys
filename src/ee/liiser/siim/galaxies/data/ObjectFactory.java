@@ -16,6 +16,26 @@ public class ObjectFactory {
 		this.method = method;
 	}
 	
+	public Galaxy makeGalaxy(Vector3f position, Vector3f velocityOrOldPosition, Vector3f normal, double width, int starCount){
+		Core core = makeCore(position, velocityOrOldPosition);
+		Star[] stars = new Star[starCount];
+		for(int i = 0; i < starCount; i++){
+			stars[i] = makeStar(core, (float) (distanceWithDistribution()*width), normal);
+		}
+		return new Galaxy(core, stars);
+	}
+	
+	public Core makeCore(Vector3f position, Vector3f velocityOrOldPosition) {
+		switch (method) {
+		case BASIC_VERLET:
+			return new BasicCore(position, velocityOrOldPosition);
+		case VELOCITY_VERLET:
+			return new VelocityCore(position, velocityOrOldPosition);
+		default:
+			return null;
+		}
+	}
+
 	public Core makeCore(Vector3f position) {
 		switch (method) {
 		case BASIC_VERLET:
@@ -47,5 +67,16 @@ public class ObjectFactory {
 		default:
 			return null;
 		}
+	}
+	
+	/**
+	 * Generates random numbers according to a x*exp(-x) distribution with an error of order O(r^6)
+	 * 
+	 * @return Random numbers according to a x*exp(-x) distribution
+	 */
+	private static double distanceWithDistribution() {
+		double r = Math.random();
+		return r - r * r + Math.pow(r, 3) * 3 / 2 - Math.pow(r, 4) * 8 / 3
+				+ Math.pow(r, 5) * 125 / 24;
 	}
 }
