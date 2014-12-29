@@ -2,6 +2,7 @@ package ee.liiser.siim.galaxies;
 
 import javax.vecmath.Vector3f;
 
+import ee.liiser.siim.galaxies.calculations.Calculator;
 import ee.liiser.siim.galaxies.calculations.Calculator.Method;
 import ee.liiser.siim.galaxies.calculations.WorkerThread;
 import ee.liiser.siim.galaxies.data.Core;
@@ -21,15 +22,15 @@ public class Main {
 	 */
 	private static final int STARCOUNT = 500;
 
-	private static final Method METHOD = Method.VELOCITY_VERLET;
+	private static final Method METHOD = Method.BASIC_VERLET;
 
 	public static void main(String[] args) {
 
 		ObjectFactory factory = new ObjectFactory(METHOD);
 
 		Galaxy galaxy1 = factory.makeGalaxy(new Vector3f(), new Vector3f(), new Vector3f(0,0,1), 1, STARCOUNT);
-		Galaxy galaxy2 = factory.makeGalaxy(new Vector3f(0,5,-30), new Vector3f(0,0,0.5f), new Vector3f(0,1,0), 1, STARCOUNT);
-//		Galaxy galaxy2 = factory.makeGalaxy(new Vector3f(0,5,-30), new Vector3f(0,5,-30 - 0.5f*Calculator.dt), new Vector3f(0,1,0), 1, STARCOUNT);
+//		Galaxy galaxy2 = factory.makeGalaxy(new Vector3f(0,5,-30), new Vector3f(0,0,0.5f), new Vector3f(0,1,0), 1, STARCOUNT);
+		Galaxy galaxy2 = factory.makeGalaxy(new Vector3f(0,5,-30), new Vector3f(0,5,-30 - 0.5f*Calculator.dt), new Vector3f(0,1,0), 1, STARCOUNT);
 		
 		Galaxy[] galaxies = new Galaxy[]{galaxy1, galaxy2};
 		
@@ -37,7 +38,7 @@ public class Main {
 		
 	}
 	
-	public static void run(Galaxy[] galaxies){
+	private static void run(Galaxy[] galaxies){
 		
 		cores = new Core[galaxies.length];
 		stars = new Star[STARCOUNT * cores.length];

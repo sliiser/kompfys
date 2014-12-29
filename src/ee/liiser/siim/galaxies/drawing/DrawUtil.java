@@ -22,14 +22,14 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import ee.liiser.siim.galaxies.data.Core;
 
-public class DrawUtil {
+class DrawUtil {
 
 	private static HashMap<Drawable, TransformGroup> tgs = new HashMap<Drawable, TransformGroup>();
 	private static SimpleUniverse universe;
 	
 	private static final Color3f bright = new Color3f(1, 1, 0.7f);
 
-	public static void update(Drawable[] points) {
+	static void update(Drawable[] points) {
 		for (Drawable point : points) {
 			TransformGroup tg = tgs.get(point);
 			Transform3D trans = new Transform3D();
@@ -38,7 +38,7 @@ public class DrawUtil {
 		}
 	}
 
-	public static void draw(Drawable[] points) {
+	static void draw(Drawable[] points) {
 		initWindow();
 		
 		BranchGroup group = addPoints(points);
@@ -103,7 +103,7 @@ public class DrawUtil {
 		
 	}
 
-	public static void lookAt(Point3d eye, Point3d center, Vector3d up) {
+	private static void lookAt(Point3d eye, Point3d center, Vector3d up) {
 		// Position the position from which the user is viewing the scene
 		TransformGroup viewTransform = universe.getViewingPlatform()
 				.getViewPlatformTransform();

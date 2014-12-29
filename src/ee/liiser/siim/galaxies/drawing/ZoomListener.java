@@ -19,7 +19,7 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import ee.liiser.siim.galaxies.Main;
 import ee.liiser.siim.galaxies.data.Core;
 
-public class ZoomListener implements MouseListener, MouseWheelListener,
+class ZoomListener implements MouseListener, MouseWheelListener,
 		MouseMotionListener {
 
 	private SimpleUniverse universe;
@@ -29,7 +29,7 @@ public class ZoomListener implements MouseListener, MouseWheelListener,
 	
 	private Point3d closest;
 
-	public ZoomListener(SimpleUniverse universe) {
+	ZoomListener(SimpleUniverse universe) {
 		this.viewTransform = universe.getViewingPlatform()
 				.getViewPlatformTransform();
 		this.universe = universe;

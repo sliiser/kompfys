@@ -4,17 +4,9 @@ import javax.vecmath.Vector3f;
 
 import ee.liiser.siim.galaxies.data.Core;
 
-public class BasicCore extends BasicObject implements Core{
+public class BasicCore extends BasicObject implements Core {
 	public BasicCore() {
-		this(0,0,0);
-	}
-
-	public BasicCore(int x, int y, int z) {
-		this(new Vector3f(x,y,z));
-	}
-
-	public BasicCore(Vector3f position) {
-		this(position, (Vector3f) position.clone());
+		this(new Vector3f(), new Vector3f());
 	}
 
 	public BasicCore(Vector3f position, Vector3f oldPosition) {

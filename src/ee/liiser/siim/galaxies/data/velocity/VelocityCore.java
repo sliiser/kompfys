@@ -7,15 +7,7 @@ import ee.liiser.siim.galaxies.data.Core;
 public class VelocityCore extends VelocityObject implements Core{
 
 	public VelocityCore() {
-		this(0,0,0);
-	}
-
-	public VelocityCore(int x, int y, int z) {
-		this(new Vector3f(x,y,z));
-	}
-
-	public VelocityCore(Vector3f position) {
-		this(position, new Vector3f());
+		this(new Vector3f(0,0,0), new Vector3f());
 	}
 
 	public VelocityCore(Vector3f position, Vector3f velocity) {
