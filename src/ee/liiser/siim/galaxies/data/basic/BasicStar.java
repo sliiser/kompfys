@@ -6,6 +6,9 @@ import javax.vecmath.Vector3f;
 import ee.liiser.siim.galaxies.calculations.Calculator;
 import ee.liiser.siim.galaxies.data.Star;
 
+/**
+ * A class for a star of the basic method
+ */
 public class BasicStar extends BasicObject implements Star {
 
 	public BasicStar(BasicCore core, float distance, Vector3f normal) {

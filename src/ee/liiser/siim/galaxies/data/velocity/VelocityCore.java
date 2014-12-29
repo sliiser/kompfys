@@ -4,6 +4,10 @@ import javax.vecmath.Vector3f;
 
 import ee.liiser.siim.galaxies.data.Core;
 
+/**
+ * A class for the galaxy core for the velocity Verlet' method
+ *
+ */
 public class VelocityCore extends VelocityObject implements Core{
 
 	public VelocityCore() {
@@ -21,7 +25,7 @@ public class VelocityCore extends VelocityObject implements Core{
 	}
 
 	public float getMass() {
-		return mass;
+		return MASS;
 	}
 
 }

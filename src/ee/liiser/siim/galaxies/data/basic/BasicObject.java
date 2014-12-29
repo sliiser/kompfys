@@ -4,6 +4,9 @@ import javax.vecmath.Vector3f;
 
 import ee.liiser.siim.galaxies.data.BaseObject;
 
+/**
+ * Base object for all basic verlet' objects
+ */
 public abstract class BasicObject extends BaseObject{
 	
 	protected Vector3f oldPosition;

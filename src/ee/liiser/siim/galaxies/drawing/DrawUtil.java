@@ -22,6 +22,11 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import ee.liiser.siim.galaxies.data.Core;
 
+/**
+ * A helper class that handles initializing the graphics window and keeping it updated
+ * @author Siim
+ *
+ */
 class DrawUtil {
 
 	private static HashMap<Drawable, TransformGroup> tgs = new HashMap<Drawable, TransformGroup>();

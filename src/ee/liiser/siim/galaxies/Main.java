@@ -12,9 +12,20 @@ import ee.liiser.siim.galaxies.data.Star;
 import ee.liiser.siim.galaxies.drawing.Drawable;
 import ee.liiser.siim.galaxies.drawing.GraphicsThread;
 
+/**
+ * Main entry-point of the application and the main class
+ *
+ */
 public class Main {
 
+	/**
+	 * An array to hold all stars in the system
+	 */
 	private static Star[] stars;
+	/**
+	 * An array to hold all galaxy cores in the system
+	 */
+	//FIXME should not be public
 	public static Core[] cores;
 
 	/**
@@ -22,6 +33,10 @@ public class Main {
 	 */
 	private static final int STARCOUNT = 500;
 
+	/**
+	 * Calculation method to use. Value should be one of
+	 * {@link Calculator.Method}
+	 */
 	private static final Method METHOD = Method.BASIC_VERLET;
 
 	public static void main(String[] args) {
@@ -29,7 +44,9 @@ public class Main {
 		ObjectFactory factory = new ObjectFactory(METHOD);
 
 		Galaxy galaxy1 = factory.makeGalaxy(new Vector3f(), new Vector3f(), new Vector3f(0,0,1), 1, STARCOUNT);
+		//Example galaxy for the Velocity method
 //		Galaxy galaxy2 = factory.makeGalaxy(new Vector3f(0,5,-30), new Vector3f(0,0,0.5f), new Vector3f(0,1,0), 1, STARCOUNT);
+		//Example galaxy for the Basic method
 		Galaxy galaxy2 = factory.makeGalaxy(new Vector3f(0,5,-30), new Vector3f(0,5,-30 - 0.5f*Calculator.dt), new Vector3f(0,1,0), 1, STARCOUNT);
 		
 		Galaxy[] galaxies = new Galaxy[]{galaxy1, galaxy2};
@@ -37,16 +54,23 @@ public class Main {
 		run(galaxies);
 		
 	}
-	
-	private static void run(Galaxy[] galaxies){
-		
+
+	/**
+	 * Main entry point of the application. Call this with an array of galaxies
+	 * to simulate their movement
+	 * 
+	 * @param galaxies is the array of galaxies to be simulated
+	 */
+	public static void run(Galaxy[] galaxies) {
+
 		cores = new Core[galaxies.length];
 		stars = new Star[STARCOUNT * cores.length];
-		
+
 		int starIndex = 0;
-		for(int i = 0; i < galaxies.length; i++){
+		for (int i = 0; i < galaxies.length; i++) {
 			cores[i] = galaxies[i].getCore();
-			System.arraycopy(galaxies[i].getStars(), 0, stars, starIndex, galaxies[i].getStars().length);
+			System.arraycopy(galaxies[i].getStars(), 0, stars, starIndex,
+					galaxies[i].getStars().length);
 			starIndex += galaxies[i].getStars().length;
 		}
 

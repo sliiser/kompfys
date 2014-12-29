@@ -4,6 +4,10 @@ import javax.vecmath.Vector3f;
 
 import ee.liiser.siim.galaxies.data.Core;
 
+/**
+ * A class for the galaxy core for the basic Verlet' method
+ *
+ */
 public class BasicCore extends BasicObject implements Core {
 	public BasicCore() {
 		this(new Vector3f(), new Vector3f());
@@ -19,11 +23,8 @@ public class BasicCore extends BasicObject implements Core {
 		return CORE_SIZE;
 	}
 
+	@Override
 	public float getMass() {
-		return mass;
-	}
-
-	public Vector3f getOldPosition() {
-		return oldPosition;
+		return MASS;
 	}
 }

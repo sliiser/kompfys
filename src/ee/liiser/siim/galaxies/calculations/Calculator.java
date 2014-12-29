@@ -13,12 +13,25 @@ import ee.liiser.siim.galaxies.data.velocity.VelocityObject;
 import ee.liiser.siim.galaxies.data.velocity.VelocityStar;
 import ee.liiser.siim.galaxies.drawing.Drawable;
 
+/**
+ * The class handling calculating the positions and movement of stars and galaxies
+ * 
+ * Holds algorithms for all (currently 2) methods
+ */
 public class Calculator {
 
 	private Core[] cores;
 	private Star[] stars;
+	
+	/**
+	 * Timestep of the calculation.
+	 * Decrease this to improve accuracy, increase this to improve performance
+	 */
 	public static float dt = 0.001f;
 
+	/**
+	 * Enum holding the possible calculation methods
+	 */
 	public enum Method {
 		BASIC_VERLET, VELOCITY_VERLET
 	}
@@ -31,6 +44,9 @@ public class Calculator {
 		this.method = method;
 	}
 
+	/**
+	 * Advances all cores and stars forward by 1 timestep
+	 */
 	void step() {
 		switch (method) {
 		case BASIC_VERLET:
@@ -54,6 +70,11 @@ public class Calculator {
 		}
 	}
 
+	/**
+	 * Method that uses the velocity method to advance the position of the given point
+	 * 
+	 * @param point whose position should be updated
+	 */
 	private void updatePos(VelocityObject point) {
 		// Velocity Verlet'
 		Vector3f v05 = new Vector3f();
@@ -74,6 +95,11 @@ public class Calculator {
 		// v(t+dt) = v05 + a(t+dt)*dt/2
 	}
 
+	/**
+	 * Method that uses the basic Verlet' method to advance the position of the given point
+	 * 
+	 * @param point whose position should be updated
+	 */
 	private void updatePos(BasicObject point) {
 		// Basic Verlet':
 		Vector3f newPos = new Vector3f();
@@ -87,6 +113,13 @@ public class Calculator {
 
 	}
 
+	/**
+	 * A method that finds the acceleration acting upon a point.
+	 * Only uses galaxy cores and not other stars when calculating gravity.
+	 * 
+	 * @param point to find the acceleration for
+	 * @return the acceleration acting upon the point
+	 */
 	private Vector3f acc(BaseObject point) {
 		Vector3f a = new Vector3f();
 		for (Core core : cores) {
@@ -97,7 +130,7 @@ public class Calculator {
 			relPos.sub(((Drawable) core).getPosition(), point.getPosition());
 
 			// m * r12 / len(r12)^3
-			relPos.scale((float) (Core.mass / Math.pow(relPos.length(), 3)));
+			relPos.scale((float) (core.getMass() / Math.pow(relPos.length(), 3)));
 
 			// a +=
 			a.add(relPos);

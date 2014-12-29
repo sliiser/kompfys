@@ -5,6 +5,10 @@ import javax.vecmath.Vector3f;
 
 import ee.liiser.siim.galaxies.data.Star;
 
+/**
+ * A class for a star for the velocity Verlet' method
+ *
+ */
 public class VelocityStar extends VelocityObject implements Star {
 
 	public VelocityStar(VelocityCore core, float distance, Vector3f normal) {

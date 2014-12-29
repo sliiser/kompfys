@@ -4,6 +4,10 @@ import ee.liiser.siim.galaxies.calculations.Calculator.Method;
 import ee.liiser.siim.galaxies.data.Core;
 import ee.liiser.siim.galaxies.data.Star;
 
+/**
+ * Thread handling the main calculation of the application.
+ *
+ */
 public class WorkerThread extends Thread{
 	
 	private Calculator calc;

@@ -4,6 +4,10 @@ import javax.vecmath.Vector3f;
 
 import ee.liiser.siim.galaxies.data.BaseObject;
 
+/**
+ * Base object for all velocity Verlet' objects
+ *
+ */
 public abstract class VelocityObject extends BaseObject {
 	
 	protected Vector3f velocity;

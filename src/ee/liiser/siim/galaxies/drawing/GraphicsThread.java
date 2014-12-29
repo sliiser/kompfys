@@ -1,5 +1,10 @@
 package ee.liiser.siim.galaxies.drawing;
 
+/**
+ * The thread that graphics runs in. Keeps fps in check and uses {@link DrawUtil}
+ * @author Siim
+ *
+ */
 public class GraphicsThread extends Thread {
 
 	private static final float fps = 60.0f;

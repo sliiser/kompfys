@@ -19,6 +19,9 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import ee.liiser.siim.galaxies.Main;
 import ee.liiser.siim.galaxies.data.Core;
 
+/**
+ * A MouseListener used to look around in the space. Handles panning, rotating, zooming and rotating around the galaxies
+ */
 class ZoomListener implements MouseListener, MouseWheelListener,
 		MouseMotionListener {
 

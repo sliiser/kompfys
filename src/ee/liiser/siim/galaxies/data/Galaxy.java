@@ -1,5 +1,10 @@
 package ee.liiser.siim.galaxies.data;
 
+/**
+ * A helper class to simplify the creation of galaxies.
+ * Not used once simulation has started
+ *
+ */
 public class Galaxy {
 	
 	private Core core;
