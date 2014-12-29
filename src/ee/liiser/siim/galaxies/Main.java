@@ -8,42 +8,53 @@ import ee.liiser.siim.galaxies.data.Core;
 import ee.liiser.siim.galaxies.data.Galaxy;
 import ee.liiser.siim.galaxies.data.ObjectFactory;
 import ee.liiser.siim.galaxies.data.Star;
-import ee.liiser.siim.galaxies.data.velocity.VelocityCore;
 import ee.liiser.siim.galaxies.drawing.Drawable;
 import ee.liiser.siim.galaxies.drawing.GraphicsThread;
 
 public class Main {
 
-	static Star[] stars;
-	static Core[] cores;
+	private static Star[] stars;
+	public static Core[] cores;
 
 	/**
 	 * Number of stars per core (galaxy)
 	 */
-	static int starcount = 500;
+	private static final int STARCOUNT = 500;
 
-	private static final Method method = Method.VELOCITY_VERLET;
+	private static final Method METHOD = Method.VELOCITY_VERLET;
 
 	public static void main(String[] args) {
 
-		ObjectFactory factory = new ObjectFactory(method);
+		ObjectFactory factory = new ObjectFactory(METHOD);
 
-		Galaxy galaxy1 = factory.makeGalaxy(new Vector3f(), new Vector3f(), new Vector3f(0,0,1), 1, starcount);
-		Galaxy galaxy2 = factory.makeGalaxy(new Vector3f(0,2,-30), new Vector3f(0,0,0.3f), new Vector3f(0,1,0), 1, starcount);
+		Galaxy galaxy1 = factory.makeGalaxy(new Vector3f(), new Vector3f(), new Vector3f(0,0,1), 1, STARCOUNT);
+		Galaxy galaxy2 = factory.makeGalaxy(new Vector3f(0,5,-30), new Vector3f(0,0,0.5f), new Vector3f(0,1,0), 1, STARCOUNT);
+//		Galaxy galaxy2 = factory.makeGalaxy(new Vector3f(0,5,-30), new Vector3f(0,5,-30 - 0.5f*Calculator.dt), new Vector3f(0,1,0), 1, STARCOUNT);
 		
-		cores = new Core[] { galaxy1.getCore(), galaxy2.getCore()};
-
-		stars = new Star[starcount * cores.length];
-		System.arraycopy(galaxy1.getStars(), 0, stars, 0, starcount);
-		System.arraycopy(galaxy2.getStars(), 0, stars, starcount, starcount);
+		Galaxy[] galaxies = new Galaxy[]{galaxy1, galaxy2};
+		
+		run(galaxies);
+		
+	}
+	
+	public static void run(Galaxy[] galaxies){
+		
+		cores = new Core[galaxies.length];
+		stars = new Star[STARCOUNT * cores.length];
+		
+		int starIndex = 0;
+		for(int i = 0; i < galaxies.length; i++){
+			cores[i] = galaxies[i].getCore();
+			System.arraycopy(galaxies[i].getStars(), 0, stars, starIndex, galaxies[i].getStars().length);
+			starIndex += galaxies[i].getStars().length;
+		}
 
 		Drawable[] points = new Drawable[stars.length + cores.length];
 		System.arraycopy(cores, 0, points, 0, cores.length);
 		System.arraycopy(stars, 0, points, cores.length, stars.length);
 
-		new WorkerThread(cores, stars, method).start();
-		GraphicsThread g = new GraphicsThread(points);
-		g.start();
+		new WorkerThread(cores, stars, METHOD).start();
+		new GraphicsThread(points).start();
 	}
 
 }

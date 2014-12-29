@@ -5,7 +5,7 @@ public class Galaxy {
 	private Core core;
 	private Star[] stars;
 	
-	public Galaxy(Core core, Star[] stars){
+	Galaxy(Core core, Star[] stars){
 		this.core = core;
 		this.stars = stars;
 	}

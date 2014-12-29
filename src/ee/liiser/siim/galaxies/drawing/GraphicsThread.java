@@ -28,7 +28,7 @@ public class GraphicsThread extends Thread {
 	}
 
 	@Override
-	public void run() {
+	public synchronized void run() {
 		long frametime = 0;
 		long start = 0;
 		long maxFrame = (long) (1000 / fps);
@@ -37,9 +37,9 @@ public class GraphicsThread extends Thread {
 				System.out.println(frametime);
 			} else {
 				try {
-					Thread.sleep(maxFrame - frametime);
+					wait(maxFrame - frametime);
 				} catch (InterruptedException e) {
-					throw new RuntimeException();
+					e.printStackTrace();
 				}
 			}
 			start = System.currentTimeMillis();

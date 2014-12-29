@@ -25,13 +25,13 @@ public class Calculator {
 
 	private final Method method;
 
-	public Calculator(Core[] cores, Star[] stars, Method method) {
+	Calculator(Core[] cores, Star[] stars, Method method) {
 		this.cores = cores;
 		this.stars = stars;
 		this.method = method;
 	}
 
-	public void step() {
+	void step() {
 		switch (method) {
 		case BASIC_VERLET:
 			for (Star star : stars) {

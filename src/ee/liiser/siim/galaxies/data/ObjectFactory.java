@@ -25,7 +25,7 @@ public class ObjectFactory {
 		return new Galaxy(core, stars);
 	}
 	
-	public Core makeCore(Vector3f position, Vector3f velocityOrOldPosition) {
+	private Core makeCore(Vector3f position, Vector3f velocityOrOldPosition) {
 		switch (method) {
 		case BASIC_VERLET:
 			return new BasicCore(position, velocityOrOldPosition);

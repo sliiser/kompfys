@@ -6,7 +6,7 @@ import ee.liiser.siim.galaxies.data.Star;
 
 public class WorkerThread extends Thread{
 	
-	Calculator calc;
+	private Calculator calc;
 	
 	public WorkerThread(Core[] cores, Star[] stars, Method method) {
 		calc = new Calculator(cores, stars, method);
@@ -15,12 +15,6 @@ public class WorkerThread extends Thread{
 	@Override
 	public void run(){
 		while(true){
-//			try {
-//				Thread.sleep(2);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 			calc.step();
 		}
 	}
