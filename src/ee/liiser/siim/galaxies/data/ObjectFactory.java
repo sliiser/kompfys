@@ -29,16 +29,15 @@ public class ObjectFactory {
 	 * Generates a galaxy
 	 * 
 	 * @param position Position of the core of the galaxy 
-	 * @param velocityOrOldPosition Second parameter according to the method.
-	 * 		Velocity of the core for Velocity method. Previous position of the core for basic method.
+	 * @param velocity Initial velocity of the core
 	 * @param normal The normal vector of the plane of the galaxy
 	 * @param width Standard deviation width of the stars around the core
 	 * @param starCount Number of stars in the galaxy
 	 * @return a generated {@link Galaxy} object with the given parameters
 	 */
-	public Galaxy makeGalaxy(Vector3f position, Vector3f velocityOrOldPosition,
+	public Galaxy makeGalaxy(Vector3f position, Vector3f velocity,
 			Vector3f normal, double width, int starCount) {
-		Core core = makeCore(position, velocityOrOldPosition);
+		Core core = makeCore(position, velocity);
 		Star[] stars = new Star[starCount];
 		for (int i = 0; i < starCount; i++) {
 			stars[i] = makeStar(core,
@@ -47,12 +46,12 @@ public class ObjectFactory {
 		return new Galaxy(core, stars);
 	}
 
-	private Core makeCore(Vector3f position, Vector3f velocityOrOldPosition) {
+	private Core makeCore(Vector3f position, Vector3f velocity) {
 		switch (method) {
 		case BASIC_VERLET:
-			return new BasicCore(position, velocityOrOldPosition);
+			return new BasicCore(position, velocity);
 		case VELOCITY_VERLET:
-			return new VelocityCore(position, velocityOrOldPosition);
+			return new VelocityCore(position, velocity);
 		default:
 			return null;
 		}

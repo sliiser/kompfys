@@ -5,12 +5,8 @@ import javax.vecmath.Vector3f;
 import ee.liiser.siim.galaxies.data.BaseObject;
 import ee.liiser.siim.galaxies.data.Core;
 import ee.liiser.siim.galaxies.data.Star;
-import ee.liiser.siim.galaxies.data.basic.BasicCore;
 import ee.liiser.siim.galaxies.data.basic.BasicObject;
-import ee.liiser.siim.galaxies.data.basic.BasicStar;
-import ee.liiser.siim.galaxies.data.velocity.VelocityCore;
 import ee.liiser.siim.galaxies.data.velocity.VelocityObject;
-import ee.liiser.siim.galaxies.data.velocity.VelocityStar;
 import ee.liiser.siim.galaxies.drawing.Drawable;
 
 /**
@@ -51,18 +47,18 @@ public class Calculator {
 		switch (method) {
 		case BASIC_VERLET:
 			for (Star star : stars) {
-				updatePos((BasicStar) star);
+				updatePos((BasicObject) star);
 			}
 			for (Core core : cores) {
-				updatePos((BasicCore) core);
+				updatePos((BasicObject) core);
 			}
 			break;
 		case VELOCITY_VERLET:
 			for (Star star : stars) {
-				updatePos((VelocityStar) star);
+				updatePos((VelocityObject) star);
 			}
 			for (Core core : cores) {
-				updatePos((VelocityCore) core);
+				updatePos((VelocityObject) core);
 			}
 			break;
 		default:

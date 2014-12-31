@@ -1,6 +1,7 @@
 package ee.liiser.siim.galaxies.drawing;
 
 import java.awt.Dimension;
+import java.awt.event.KeyListener;
 import java.util.HashMap;
 
 import javax.media.j3d.BoundingSphere;
@@ -43,8 +44,8 @@ class DrawUtil {
 		}
 	}
 
-	static void draw(Drawable[] points) {
-		initWindow();
+	static void draw(Drawable[] points, KeyListener keyListener) {
+		initWindow(keyListener);
 		
 		BranchGroup group = addPoints(points);
 
@@ -86,7 +87,7 @@ class DrawUtil {
 		return group;
 	}
 
-	private static void initWindow() {
+	private static void initWindow(KeyListener keyListener) {
 		JFrame frame = new JFrame("Kompfys: Galaktikad");
 		
 		Canvas3D canvas = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
@@ -99,6 +100,7 @@ class DrawUtil {
 		canvas.addMouseListener(listener);
 		canvas.addMouseWheelListener(listener);
 		canvas.addMouseMotionListener(listener);
+		canvas.addKeyListener(keyListener);
 		frame.add(canvas);
 		frame.pack();
 		

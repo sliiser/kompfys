@@ -2,6 +2,7 @@ package ee.liiser.siim.galaxies.data.basic;
 
 import javax.vecmath.Vector3f;
 
+import ee.liiser.siim.galaxies.calculations.Calculator;
 import ee.liiser.siim.galaxies.data.Core;
 
 /**
@@ -13,9 +14,11 @@ public class BasicCore extends BasicObject implements Core {
 		this(new Vector3f(), new Vector3f());
 	}
 
-	public BasicCore(Vector3f position, Vector3f oldPosition) {
+	public BasicCore(Vector3f position, Vector3f velocity) {
 		this.position = position;
-		this.oldPosition = oldPosition;
+		this.oldPosition = new Vector3f(velocity);
+		this.oldPosition.scale(-Calculator.dt);
+		this.oldPosition.add(position);
 	}
 
 	@Override

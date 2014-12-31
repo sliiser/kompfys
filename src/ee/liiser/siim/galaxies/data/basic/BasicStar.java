@@ -5,6 +5,7 @@ import javax.vecmath.Vector3f;
 
 import ee.liiser.siim.galaxies.calculations.Calculator;
 import ee.liiser.siim.galaxies.data.Star;
+import ee.liiser.siim.galaxies.drawing.Drawable;
 
 /**
  * A class for a star of the basic method
@@ -44,8 +45,16 @@ public class BasicStar extends BasicObject implements Star {
 
 		this.oldPosition = new Vector3f(relPos);
 		this.oldPosition.add(core.getOldPosition());
+		
+		Vector3f acc = new Vector3f();
+		// m * r / r^3
+		acc.scale((float) ( - core.getMass() / Math.pow(distance, 3)), relPos);
+		acc.scale(Calculator.dt/2);
+
 		Vector3f velocity = new Vector3f(y,-x,0);
 		a.transform(velocity);
+		velocity.add(acc);
+		
 		velocity.scale((float) (Calculator.dt/(Math.sqrt(distance)*distance)));
 		this.oldPosition.sub(velocity);
 	}

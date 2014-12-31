@@ -1,5 +1,7 @@
 package ee.liiser.siim.galaxies.drawing;
 
+import java.awt.event.KeyListener;
+
 /**
  * The thread that graphics runs in. Keeps fps in check and uses {@link DrawUtil}
  * @author Siim
@@ -11,9 +13,9 @@ public class GraphicsThread extends Thread {
 
 	private Drawable[] points;
 
-	public GraphicsThread(Drawable[] points) {
+	public GraphicsThread(Drawable[] points, KeyListener keyListener) {
 		this.points = points;
-		DrawUtil.draw(points);
+		DrawUtil.draw(points, keyListener);
 	}
 
 	@Override
