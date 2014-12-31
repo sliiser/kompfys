@@ -49,15 +49,18 @@ public class Main {
 	public static void main(String[] args) {
 		Galaxy[] galaxies = null;
 
-		if (args.length >= 2)
-			setConf(args);
+		if (args.length >= 2){
+			setConf(args[1]);
+		}else{
+			setConf("conf.txt");
+		}
 
 		ObjectFactory factory = new ObjectFactory(METHOD);
 
 		if (args.length >= 1) {
-			galaxies = makeGalaxies(args, factory);
+			galaxies = makeGalaxies(args[0], factory);
 		} else {
-			galaxies = makeDefaultGalaxies(factory);
+			galaxies = makeGalaxies("galaxies.txt", factory);
 		}
 		run(galaxies);
 
@@ -92,20 +95,10 @@ public class Main {
 		t.start();
 	}
 
-	private static Galaxy[] makeDefaultGalaxies(ObjectFactory factory) {
-		// Default galaxy configuration
-		Galaxy galaxy1 = factory.makeGalaxy(new Vector3d(), new Vector3d(),
-				new Vector3d(0, 0, 1), 1, STARCOUNT);
-		Galaxy galaxy2 = factory.makeGalaxy(new Vector3d(0, 5, -30),
-				new Vector3d(0, 0, 0.5), new Vector3d(0, 1, 0), 1, STARCOUNT);
-
-		return new Galaxy[] { galaxy1, galaxy2 };
-	}
-
-	private static Galaxy[] makeGalaxies(String[] args, ObjectFactory factory) {
+	private static Galaxy[] makeGalaxies(String galaxyFile, ObjectFactory factory) {
 
 		try {
-			BufferedReader r = new BufferedReader(new FileReader(args[0]));
+			BufferedReader r = new BufferedReader(new FileReader(galaxyFile));
 			ArrayList<Galaxy> list = new ArrayList<Galaxy>();
 			while (true) {
 				String line = r.readLine();
@@ -132,9 +125,9 @@ public class Main {
 
 	}
 
-	private static void setConf(String[] args) {
+	private static void setConf(String confFile) {
 		try {
-			BufferedReader r = new BufferedReader(new FileReader(args[1]));
+			BufferedReader r = new BufferedReader(new FileReader(confFile));
 			String line;
 			do {
 				line = r.readLine();
@@ -147,7 +140,7 @@ public class Main {
 				METHOD = Method.BASIC_VERLET;
 			} else {
 				throw new IllegalArgumentException(params[0]
-						+ " is not a method in " + args[1]);
+						+ " is not a method in " + confFile);
 			}
 			Calculator.dt = Double.parseDouble(params[1]);
 			GraphicsThread.fps = Double.parseDouble(params[2]);

@@ -92,9 +92,11 @@ public class Calculator {
 	}
 
 	/**
-	 * Method that uses the basic Verlet' method to advance the position of the given point
+	 * Method that uses the basic Verlet' method to advance the position of the
+	 * given point
 	 * 
-	 * @param point whose position should be updated
+	 * @param point
+	 *            whose position should be updated
 	 */
 	private void updatePos(BasicObject point) {
 		// Basic Verlet':
