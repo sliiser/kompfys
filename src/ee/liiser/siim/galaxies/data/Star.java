@@ -10,5 +10,5 @@ public interface Star extends Drawable{
 	/**
 	 * Visual size of the stars.
 	 */
-	public static final float STAR_SIZE = 0.02f;
+	public static final double STAR_SIZE = 0.02f;
 }

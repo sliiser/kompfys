@@ -1,6 +1,6 @@
 package ee.liiser.siim.galaxies.data;
 
-import javax.vecmath.Vector3f;
+import javax.vecmath.Vector3d;
 
 /**
  * The base class for all cores and stars of all methods
@@ -8,13 +8,13 @@ import javax.vecmath.Vector3f;
  */
 public abstract class BaseObject {
 	
-	protected Vector3f position;
+	protected Vector3d position;
 	
-	public Vector3f getPosition() {
+	public Vector3d getPosition() {
 		return position;
 	}
 
-	public void setPosition(Vector3f position) {
+	public void setPosition(Vector3d position) {
 		this.position = position;
 	}
 

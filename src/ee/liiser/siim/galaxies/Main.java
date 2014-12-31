@@ -1,6 +1,6 @@
 package ee.liiser.siim.galaxies;
 
-import javax.vecmath.Vector3f;
+import javax.vecmath.Vector3d;
 
 import ee.liiser.siim.galaxies.calculations.Calculator;
 import ee.liiser.siim.galaxies.calculations.Calculator.Method;
@@ -38,15 +38,14 @@ public class Main {
 	 * Calculation method to use. Value should be one of
 	 * {@link Calculator.Method}
 	 */
-	private static final Method METHOD = Method.BASIC_VERLET;
+	private static final Method METHOD = Method.VELOCITY_VERLET;
 
 	public static void main(String[] args) {
 
 		ObjectFactory factory = new ObjectFactory(METHOD);
 
-		Galaxy galaxy1 = factory.makeGalaxy(new Vector3f(), new Vector3f(), new Vector3f(0,0,1), 1, STARCOUNT);
-		//Example galaxy for the Velocity method
-		Galaxy galaxy2 = factory.makeGalaxy(new Vector3f(0,5,-30), new Vector3f(0,0,0.5f), new Vector3f(0,1,0), 1, STARCOUNT);
+		Galaxy galaxy1 = factory.makeGalaxy(new Vector3d(), new Vector3d(), new Vector3d(0,0,1), 1, STARCOUNT);
+		Galaxy galaxy2 = factory.makeGalaxy(new Vector3d(0,5,-30), new Vector3d(0,0,0.5), new Vector3d(0,1,0), 1, STARCOUNT);
 		
 		Galaxy[] galaxies = new Galaxy[]{galaxy1, galaxy2};
 		

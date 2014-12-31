@@ -11,7 +11,7 @@ import ee.liiser.siim.galaxies.data.Star;
 public class WorkerThread extends Thread {
 
 	private Calculator calc;
-	private int pauseStep = Integer.MAX_VALUE;
+	private int pauseStep = 0;
 	private int step = 0;
 
 	public WorkerThread(Core[] cores, Star[] stars, Method method) {

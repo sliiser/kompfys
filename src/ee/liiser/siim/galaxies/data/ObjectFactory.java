@@ -1,6 +1,6 @@
 package ee.liiser.siim.galaxies.data;
 
-import javax.vecmath.Vector3f;
+import javax.vecmath.Vector3d;
 
 import ee.liiser.siim.galaxies.calculations.Calculator;
 import ee.liiser.siim.galaxies.calculations.Calculator.Method;
@@ -35,18 +35,17 @@ public class ObjectFactory {
 	 * @param starCount Number of stars in the galaxy
 	 * @return a generated {@link Galaxy} object with the given parameters
 	 */
-	public Galaxy makeGalaxy(Vector3f position, Vector3f velocity,
-			Vector3f normal, double width, int starCount) {
+	public Galaxy makeGalaxy(Vector3d position, Vector3d velocity,
+			Vector3d normal, double width, int starCount) {
 		Core core = makeCore(position, velocity);
 		Star[] stars = new Star[starCount];
 		for (int i = 0; i < starCount; i++) {
-			stars[i] = makeStar(core,
-					(float) (distanceWithDistribution() * width), normal);
+			stars[i] = makeStar(core, (distanceWithDistribution() * width), normal);
 		}
 		return new Galaxy(core, stars);
 	}
 
-	private Core makeCore(Vector3f position, Vector3f velocity) {
+	private Core makeCore(Vector3d position, Vector3d velocity) {
 		switch (method) {
 		case BASIC_VERLET:
 			return new BasicCore(position, velocity);
@@ -57,7 +56,7 @@ public class ObjectFactory {
 		}
 	}
 
-	private Star makeStar(Core core, float distance, Vector3f normal) {
+	private Star makeStar(Core core, double distance, Vector3d normal) {
 		switch (method) {
 		case BASIC_VERLET:
 			return new BasicStar((BasicCore) core, distance, normal);

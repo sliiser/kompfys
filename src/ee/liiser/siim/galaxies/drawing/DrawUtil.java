@@ -16,7 +16,6 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Point3f;
 import javax.vecmath.Vector3d;
-import javax.vecmath.Vector3f;
 
 import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.universe.SimpleUniverse;
@@ -60,7 +59,7 @@ class DrawUtil {
 		BranchGroup group = new BranchGroup();
 
 		for (Drawable point : points) {
-			Vector3f vector = new Vector3f(point.getPosition());
+			Vector3d vector = new Vector3d(point.getPosition());
 			Transform3D transform = new Transform3D();
 			transform.setTranslation(vector);
 
@@ -68,7 +67,7 @@ class DrawUtil {
 			tg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 			tg.setTransform(transform);
 
-			Sphere sphere = new Sphere(point.getSize());
+			Sphere sphere = new Sphere((float) point.getSize());
 			if (point instanceof Core) {
 				sphere.getAppearance().getMaterial().setEmissiveColor(bright);
 				

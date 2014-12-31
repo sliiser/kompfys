@@ -21,6 +21,10 @@ public class PauseListener implements KeyListener, ActionListener {
 		stepTimer = new Timer(20, this);
 		stepTimer.setInitialDelay(200);
 	}
+	
+	public void setThread(WorkerThread thread){
+		this.thread = thread;
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -38,7 +42,7 @@ public class PauseListener implements KeyListener, ActionListener {
 			controlDown = true;
 			break;
 		case (KeyEvent.VK_SPACE):
-			//Only toggle on release
+			// Only toggle on release
 			break;
 		case (KeyEvent.VK_RIGHT):
 			stepTimer.start();
@@ -57,7 +61,8 @@ public class PauseListener implements KeyListener, ActionListener {
 			controlDown = false;
 			break;
 		case (KeyEvent.VK_SPACE):
-			thread.togglePause();
+			if (thread != null)
+				thread.togglePause();
 			break;
 		case (KeyEvent.VK_RIGHT):
 			stepTimer.stop();
@@ -71,16 +76,17 @@ public class PauseListener implements KeyListener, ActionListener {
 		step();
 
 	}
-	
-	private void step(){
-		if (shiftDown) {
-			thread.step(10);
-		} else if (controlDown) {
-			thread.step(100);
-		} else {
-			thread.step();
+
+	private void step() {
+		if (thread != null) {
+			if (shiftDown) {
+				thread.step(10);
+			} else if (controlDown) {
+				thread.step(100);
+			} else {
+				thread.step();
+			}
 		}
-		
 	}
 
 }
