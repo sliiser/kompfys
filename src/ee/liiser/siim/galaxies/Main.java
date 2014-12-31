@@ -6,8 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.vecmath.Vector3d;
-
 import ee.liiser.siim.galaxies.calculations.Calculator;
 import ee.liiser.siim.galaxies.calculations.Calculator.Method;
 import ee.liiser.siim.galaxies.calculations.WorkerThread;
@@ -36,22 +34,17 @@ public class Main {
 	public static Core[] cores;
 
 	/**
-	 * Number of stars per core (galaxy)
-	 */
-	private static final int STARCOUNT = 500;
-
-	/**
 	 * Calculation method to use. Value should be one of
 	 * {@link Calculator.Method}
 	 */
-	private static Method METHOD = Method.VELOCITY_VERLET;
+	private static Method METHOD;
 
 	public static void main(String[] args) {
 		Galaxy[] galaxies = null;
 
-		if (args.length >= 2){
+		if (args.length >= 2) {
 			setConf(args[1]);
-		}else{
+		} else {
 			setConf("conf.txt");
 		}
 
@@ -65,7 +58,7 @@ public class Main {
 		run(galaxies);
 
 	}
-	
+
 	/**
 	 * Main entry point of the application. Call this with an array of galaxies
 	 * to simulate their movement
@@ -76,7 +69,11 @@ public class Main {
 	public static void run(Galaxy[] galaxies) {
 
 		cores = new Core[galaxies.length];
-		stars = new Star[STARCOUNT * cores.length];
+		int starcount = 0;
+		for(Galaxy g : galaxies){
+			starcount += g.getStars().length;
+		}
+		stars = new Star[starcount];
 
 		int starIndex = 0;
 		for (int i = 0; i < galaxies.length; i++) {
@@ -95,7 +92,8 @@ public class Main {
 		t.start();
 	}
 
-	private static Galaxy[] makeGalaxies(String galaxyFile, ObjectFactory factory) {
+	private static Galaxy[] makeGalaxies(String galaxyFile,
+			ObjectFactory factory) {
 
 		try {
 			BufferedReader r = new BufferedReader(new FileReader(galaxyFile));

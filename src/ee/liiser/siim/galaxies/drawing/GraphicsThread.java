@@ -4,12 +4,11 @@ import java.awt.event.KeyListener;
 
 /**
  * The thread that graphics runs in. Keeps fps in check and uses {@link DrawUtil}
- * @author Siim
  *
  */
 public class GraphicsThread extends Thread {
 
-	public static double fps = 60.0f;
+	public static double fps;
 
 	private Drawable[] points;
 

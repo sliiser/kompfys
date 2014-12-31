@@ -23,7 +23,7 @@ public class Calculator {
 	 * Timestep of the calculation.
 	 * Decrease this to improve accuracy, increase this to improve performance
 	 */
-	public static double dt = 0.001;
+	public static double dt;
 
 	/**
 	 * Enum holding the possible calculation methods
