@@ -55,6 +55,7 @@ public class BasicStar extends BasicObject implements Star {
 		velocity.add(acc);
 		
 		velocity.scale(Calculator.dt/(Math.sqrt(distance)*distance));
+		velocity.scale(Math.random()/2 + 0.75);
 		this.oldPosition.sub(velocity);
 	}
 

@@ -78,10 +78,10 @@ public class Calculator {
 		v05.add(point.getVelocity());
 		// v(t+dt/2) = v + a*dt/2
 
-		Vector3d newPos2 = new Vector3d();
-		newPos2.scale(dt, v05);
-		newPos2.add(point.getPosition());
-		point.setPosition(newPos2);
+		Vector3d newPos = new Vector3d();
+		newPos.scale(dt, v05);
+		newPos.add(point.getPosition());
+		point.setPosition(newPos);
 		// x(t+dt) = x + v05*dt
 
 		Vector3d newVel = new Vector3d();
