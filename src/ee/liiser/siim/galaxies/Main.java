@@ -48,73 +48,21 @@ public class Main {
 
 	public static void main(String[] args) {
 		Galaxy[] galaxies = null;
-		
-		if(args.length >= 2){
-			try {
-				BufferedReader r = new BufferedReader(new FileReader(args[1]));
-				String line;
-				do{
-					line = r.readLine();
-				}while(line != null && line.startsWith("#"));
-				r.close();
-				String[] params = line.split(",");
-				if(params[0].toLowerCase().equals("velocity")){
-					METHOD = Method.VELOCITY_VERLET;
-				}else if(params[0].toLowerCase().equals("basic")){
-					METHOD = Method.BASIC_VERLET;
-				}else{
-					throw new IllegalArgumentException(params[0] + " is not a method in " + args[1]);
-				}
-				Calculator.dt = Double.parseDouble(params[1]);
-				GraphicsThread.fps = Double.parseDouble(params[2]);
-				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		ObjectFactory factory = new ObjectFactory(METHOD);
-		
-		
-		if (args.length >= 1) {
-			
-			try {
-				BufferedReader r = new BufferedReader(new FileReader(args[0]));
-				ArrayList<Galaxy> list = new ArrayList<Galaxy>();
-				while(true){
-					String line = r.readLine();
-					if(line == null) break;
-					if(line.isEmpty()) break;
-					if(line.startsWith("#")) continue;
-					
-					list.add(factory.makeGalaxy(line));
-					
-				}
-				r.close();
-				galaxies = new Galaxy[list.size()];
-				galaxies = list.toArray(galaxies);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-		} else {
-			// Default galaxy configuration
-			Galaxy galaxy1 = factory.makeGalaxy(new Vector3d(), new Vector3d(),
-					new Vector3d(0, 0, 1), 1, STARCOUNT);
-			Galaxy galaxy2 = factory.makeGalaxy(new Vector3d(0, 5, -30),
-					new Vector3d(0, 0, 0.5), new Vector3d(0, 1, 0), 1,
-					STARCOUNT);
 
-			galaxies = new Galaxy[] { galaxy1, galaxy2 };
+		if (args.length >= 2)
+			setConf(args);
+
+		ObjectFactory factory = new ObjectFactory(METHOD);
+
+		if (args.length >= 1) {
+			galaxies = makeGalaxies(args, factory);
+		} else {
+			galaxies = makeDefaultGalaxies(factory);
 		}
 		run(galaxies);
 
 	}
-
+	
 	/**
 	 * Main entry point of the application. Call this with an array of galaxies
 	 * to simulate their movement
@@ -142,6 +90,74 @@ public class Main {
 		WorkerThread t = new WorkerThread(cores, stars, METHOD);
 		new GraphicsThread(points, new PauseListener(t)).start();
 		t.start();
+	}
+
+	private static Galaxy[] makeDefaultGalaxies(ObjectFactory factory) {
+		// Default galaxy configuration
+		Galaxy galaxy1 = factory.makeGalaxy(new Vector3d(), new Vector3d(),
+				new Vector3d(0, 0, 1), 1, STARCOUNT);
+		Galaxy galaxy2 = factory.makeGalaxy(new Vector3d(0, 5, -30),
+				new Vector3d(0, 0, 0.5), new Vector3d(0, 1, 0), 1, STARCOUNT);
+
+		return new Galaxy[] { galaxy1, galaxy2 };
+	}
+
+	private static Galaxy[] makeGalaxies(String[] args, ObjectFactory factory) {
+
+		try {
+			BufferedReader r = new BufferedReader(new FileReader(args[0]));
+			ArrayList<Galaxy> list = new ArrayList<Galaxy>();
+			while (true) {
+				String line = r.readLine();
+				if (line == null)
+					break;
+				if (line.isEmpty())
+					break;
+				if (line.startsWith("#"))
+					continue;
+
+				list.add(factory.makeGalaxy(line));
+
+			}
+			r.close();
+			Galaxy[] galaxies = new Galaxy[list.size()];
+			galaxies = list.toArray(galaxies);
+			return galaxies;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	private static void setConf(String[] args) {
+		try {
+			BufferedReader r = new BufferedReader(new FileReader(args[1]));
+			String line;
+			do {
+				line = r.readLine();
+			} while (line != null && line.startsWith("#"));
+			r.close();
+			String[] params = line.split(",");
+			if (params[0].toLowerCase().equals("velocity")) {
+				METHOD = Method.VELOCITY_VERLET;
+			} else if (params[0].toLowerCase().equals("basic")) {
+				METHOD = Method.BASIC_VERLET;
+			} else {
+				throw new IllegalArgumentException(params[0]
+						+ " is not a method in " + args[1]);
+			}
+			Calculator.dt = Double.parseDouble(params[1]);
+			GraphicsThread.fps = Double.parseDouble(params[2]);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
