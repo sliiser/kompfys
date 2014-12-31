@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
  */
 public class GraphicsThread extends Thread {
 
-	private static final double fps = 60.0f;
+	public static double fps = 60.0f;
 
 	private Drawable[] points;
 

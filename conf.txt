@@ -1,0 +1,2 @@
+#Method(Velocity/Basic),dt,fps
+Velocity,0.001,60

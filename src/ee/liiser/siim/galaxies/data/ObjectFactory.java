@@ -24,6 +24,22 @@ public class ObjectFactory {
 	public ObjectFactory(Method method) {
 		this.method = method;
 	}
+	
+	/**
+	 * Generates a galaxy from a formatted string
+	 * @param string
+	 * @return galaxy
+	 */
+	public Galaxy makeGalaxy(String line) {
+		String[] parts = line.split(";");
+		Vector3d[] vecs = new Vector3d[3];
+		for(int i = 0; i < 3; i++){
+			String[] nrs = parts[i].split(",");
+			vecs[i] = new Vector3d(Double.parseDouble(nrs[0]), Double.parseDouble(nrs[1]), Double.parseDouble(nrs[2]));
+		}
+		
+		return makeGalaxy(vecs[0], vecs[1], vecs[2], Double.parseDouble(parts[3]), Integer.parseInt(parts[4]));
+	}
 
 	/**
 	 * Generates a galaxy
