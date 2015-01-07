@@ -1,5 +1,12 @@
 # Description of galaxies. Each line is a different galaxy.
 # First 3 elements should be 3d vectors seperated by commas
 # position;velocity;normal;width;starcount
+
+# 3 galaxy pass example
 0,0,0;0,0,0;0,0,1;1;500
 0,5,-30;0,0,0.5;0,1,0;1;500
+#-30,-5,0;0.5,0,0;1,0,0;1;500
+
+# 2 galaxy orbit example
+#0,0,0;0,0.2,0;0,0,1;1;500
+#0,0,-5;0,-0.2,0;0,1,0;1;500

@@ -24,7 +24,8 @@ public class WorkerThread extends Thread {
 			synchronized (this) {
 				while (true) {
 					if (paused())
-						wait();
+						wait(100);
+					
 					else {
 						calc.step();
 						step++;

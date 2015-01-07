@@ -103,7 +103,7 @@ public class Main {
 				if (line == null)
 					break;
 				if (line.isEmpty())
-					break;
+					continue;
 				if (line.startsWith("#"))
 					continue;
 

@@ -31,6 +31,7 @@ public class ObjectFactory {
 	 * @return galaxy
 	 */
 	public Galaxy makeGalaxy(String line) {
+		line = line.replace(" ", "").replace("(", "").replace(")", "");
 		String[] parts = line.split(";");
 		Vector3d[] vecs = new Vector3d[3];
 		for(int i = 0; i < 3; i++){
