@@ -23,7 +23,7 @@ public class GraphicsThread extends Thread {
 		long start = 0;
 		long maxFrame = (long) (1000 / fps);
 		while (true) {
-			if (frametime > maxFrame) {
+			if (frametime >= maxFrame) {
 				System.out.println(frametime);
 			} else {
 				try {
